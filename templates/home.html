@@ -1,0 +1,15 @@
+{% extends "layout.html"%}
+
+{% block content%}
+    <h1>Find True Love</h1>
+  {% for card in cards%}
+
+  <article class="media content-section">
+    <div class="media-body">
+      <h2><a class="card-title" href="#">{{card.name}} , {{card.age}}</a></h2>
+    </div>
+  </article>
+
+    <h4></h4>
+  {% endfor %}
+{% endblock content %}

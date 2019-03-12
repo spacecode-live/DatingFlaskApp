@@ -1,15 +1,142 @@
 {% extends "layout.html"%}
 
 {% block content%}
-    <h1>Find True Love</h1>
-  {% for card in cards%}
 
-  <article class="media content-section">
-    <div class="media-body">
-      <h2><a class="card-title" href="#">{{card.name}} , {{card.age}}</a></h2>
+  <div class="stage">
+    <div id="stacked-cards-block" class="stackedcards stackedcards--animatable init">
+      <div class="stackedcards-container">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-image"><img src="/static/van.jpg" width="100%" height="100%"/></div>
+            <!--
+            <div class="card-titles">
+              <h1>Adventure <br/> and Outdoor</h1>
+              <h3>10 Destinations</h3>
+            </div>
+            -->
+          </div>
+          <div class="card-footer">
+            <div class="popular-destinations-text">Virgil Van Dijk</div>
+            <div class="popular-destinations-images">
+              <div class="circle"><img src="https://image.ibb.co/jmEYL7/adventure_1.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/nsCynn/adventure_2.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/hmsL07/adventure_3.jpg" width="100%" height="100%"/></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-image"><img src="https://image.ibb.co/fXPg7n/Beach_and_Chill.png" width="100%" height="100%"/></div>
+            <div class="card-titles">
+              <h1>Beach <br/> and Chill</h1>
+              <h3>12 Destinations</h3>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="popular-destinations-text">Popular Destinations</div>
+            <div class="popular-destinations-images">
+              <div class="circle"><img src="https://image.ibb.co/muiA07/beach_chill_1.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/emAOL7/beach_chill_2.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/invq07/beach_chill_3.jpg" width="100%" height="100%"/></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-image"><img src="https://image.ibb.co/c9gTnn/Romantic_Gateways.png" width="100%" height="100%"/></div>
+            <div class="card-titles">
+              <h1>Romantic <br/> Gateways</h1>
+              <h3>15 Destinations</h3>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="popular-destinations-text">Popular Destinations</div>
+            <div class="popular-destinations-images">
+              <div class="circle"><img src="https://image.ibb.co/nQrkYS/romantic_1.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/ioqOL7/romantic_2.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/mXSESn/romantic_3.jpg" width="100%" height="100%"/></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-image"><img src="https://image.ibb.co/jY88nn/city_breaks.png" width="100%" height="100%"/></div>
+            <div class="card-titles">
+              <h1>City <br/> Breaks</h1>
+              <h3>32 Destinations</h3>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="popular-destinations-text">Popular Destinations</div>
+            <div class="popular-destinations-images">
+              <div class="circle"><img src="https://image.ibb.co/myaetS/city_break_1.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/ciocf7/city_break_2.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/i2e5YS/city_break_3.jpg" width="100%" height="100%"/></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-image"><img src="https://image.ibb.co/eBNZSn/Family_Vacation.png" width="100%" height="100%"/></div>
+            <div class="card-titles">
+              <h1>Family <br/> Vancation</h1>
+              <h3>20 Destinations</h3>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="popular-destinations-text">Popular Destinations</div>
+            <div class="popular-destinations-images">
+              <div class="circle"><img src="https://image.ibb.co/kEN3L7/family_vacation_1.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/iA8M7n/family_vacation_2.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/mXOcf7/family_vacation_3.jpg" width="100%" height="100%"/></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-image"><img src="https://image.ibb.co/epvM7n/Art_and_culture.png" width="100%" height="100%"/></div>
+            <div class="card-titles">
+              <h1>Art and <br/> Culture</h1>
+              <h3>18 Destinations</h3>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="popular-destinations-text">Popular Destinations</div>
+            <div class="popular-destinations-images">
+              <div class="circle"><img src="https://image.ibb.co/kVPYL7/art_culture_1.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/dp4Tnn/art_culture_2.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/bu6KtS/art_culture_3.jpg" width="100%" height="100%"/></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-image"><img src="https://image.ibb.co/bXTXV7/Far_and_Away_2x.png" width="100%" height="100%"/></div>
+            <div class="card-titles">
+              <h1>Far and <br/> Away</h1>
+              <h3>23 Destinations</h3>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="popular-destinations-text">Popular <br/> Destinations</div>
+            <div class="popular-destinations-images">
+              <div class="circle"><img src="https://image.ibb.co/fOYztS/far_away_1.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/izdXDS/far_away_2.jpg" width="100%" height="100%"/></div>
+              <div class="circle"><img src="https://image.ibb.co/mqwKtS/far_away_3.jpg" width="100%" height="100%"/></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="stackedcards--animatable stackedcards-overlay top"><img src="https://image.ibb.co/m1ykYS/rank_army_star_2_3x.png"  width="auto" height="auto"/></div>
+      <div class="stackedcards--animatable stackedcards-overlay right"><img src="https://image.ibb.co/dCuESn/Path_3x.png" width="auto" height="auto"/></div>
+      <div class="stackedcards--animatable stackedcards-overlay left"><img src="https://image.ibb.co/heTxf7/20_status_close_3x.png" width="auto" height="auto"/></div>
     </div>
-  </article>
+    <div class="global-actions">
+      <div class="left-action"><img src="https://image.ibb.co/heTxf7/20_status_close_3x.png" width="26" height="26"/></div>
+      <div class="top-action"><img src="https://image.ibb.co/m1ykYS/rank_army_star_2_3x.png" width="18" height="16"/></div>
+      <div class="right-action"><img src="https://image.ibb.co/dCuESn/Path_3x.png" width="30" height="28"/></div>
+  </div>
+</div>
 
-    <h4></h4>
-  {% endfor %}
+
 {% endblock content %}

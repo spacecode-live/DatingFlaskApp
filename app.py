@@ -4,7 +4,8 @@ app = Flask(__name__)
 
 cards = [
 { 'name': 'Selina Mangaroo', 'age': '20'},
-{ 'name': 'Alexandra Baybay', 'age': '21'}
+{ 'name': 'Alexandra Baybay', 'age': '21'},
+{ 'name': 'Yohannes Berhane', 'age': '21'}
 ]
 
 @app.route("/")

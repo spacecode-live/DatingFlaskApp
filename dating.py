@@ -1,6 +1,11 @@
+<<<<<<< HEAD:app.py
 from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
+=======
+from flask import Flask, render_template, url_for
+from app.models import User, example_data
+>>>>>>> 94bcc77cd2fb9873de0c851c6a86296bd2524d5c:dating.py
 
 app = Flask(__name__)
 
@@ -31,12 +36,17 @@ class Card(db.Model):
 
 
 cards = [
-{ 'name': 'Selina Mangaroo', 'age': '20'},
-{ 'name': 'Alexandra Baybay', 'age': '21'},
-{ 'name': 'Yohannes Berhane', 'age': '21'}
+{ 'name': 'Daenerys Targaryen', 'age': '18'},
+{ 'name': 'Jon Snow', 'age': '22'},
+{ 'name': 'Tyrion Lannister', 'age': '24'},
+{ 'name': 'Missandei', 'age': '22'},
+{ 'name': 'Podrick Payne', 'age' : '18'}
 ]
 
 @app.route("/")
+def index():
+    return render_template('home.html', cards=cards)
+
 @app.route("/home")
 def home():
     return render_template('home.html', cards=cards)

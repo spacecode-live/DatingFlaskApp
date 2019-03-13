@@ -20,6 +20,19 @@ class User(db.Model):
     interest = db.relationship('Interest',
                             backref=db.backref('User'))
 
+class Card(db.Model):
+    """User card view """
+
+    __tablename__ 'cards'
+
+    id = db.Column(db.Integer, primary_key=True)
+    image = db.Column(db.String(250), nullable = True)
+    username = db.Column(db.String(50), nullable = False)
+    age = db.Column(db.Integer, nullable = False)
+
+    interest = db.relationship('Interest',
+                            backref=db.backref('Card'))
+
 
 class Interest(db.Model):
     """ User interests and hobbies for matchmaking, Each Column will

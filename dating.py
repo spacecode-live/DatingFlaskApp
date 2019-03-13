@@ -1,17 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD:app.py
 from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
-=======
-from flask import Flask, render_template, url_for
-from app.models import User, example_data
->>>>>>> 94bcc77cd2fb9873de0c851c6a86296bd2524d5c:dating.py
-=======
-from flask import Flask, render_template, url_for, flash, redirect
-from flask_sqlalchemy import SQLAlchemy
-from forms import RegistrationForm, LoginForm
->>>>>>> y-berhane56-master
 
 app = Flask(__name__)
 

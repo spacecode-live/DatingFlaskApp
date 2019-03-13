@@ -31,9 +31,11 @@ class Card(db.Model):
 
 
 cards = [
-{ 'name': 'Selina Mangaroo', 'age': '20'},
-{ 'name': 'Alexandra Baybay', 'age': '21'},
-{ 'name': 'Yohannes Berhane', 'age': '21'}
+{ 'name': 'Daenerys Targaryen', 'age': '18'},
+{ 'name': 'Jon Snow', 'age': '22'},
+{ 'name': 'Tyrion Lannister', 'age': '24'},
+{ 'name': 'Missandei', 'age': '22'},
+{ 'name': 'Podrick Payne', 'age' : '18'}
 ]
 
 @app.route("/")

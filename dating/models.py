@@ -1,4 +1,4 @@
-from app import db
+from dating import db
 
 class User(db.Model):
     """ User of the Dating website."""
@@ -23,7 +23,7 @@ class User(db.Model):
 class Card(db.Model):
     """User card view """
 
-    __tablename__ 'cards'
+    __tablename__ = 'cards'
 
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.String(250), nullable = True)

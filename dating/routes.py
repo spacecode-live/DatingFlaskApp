@@ -1,8 +1,7 @@
 from flask import render_template, url_for, flash, redirect
 from dating import app
 from dating.forms import RegistrationForm, LoginForm
-from dating.models import User, Card
-
+from dating.models import *
 
 cards = [
 { 'name': 'Daenerys Targaryen', 'age': '18'},
@@ -14,7 +13,8 @@ cards = [
 
 @app.route("/")
 def index():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template('login.html', title='Login', form=form)
 
 @app.route("/home")
 def home():

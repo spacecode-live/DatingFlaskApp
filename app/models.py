@@ -1,13 +1,20 @@
 from flask_sqlalchemy import SQLAlchemy
+from Dating-web-app import db, login_manager
+from flask_login import UserMixin
+
 db = SQLAlchemy()
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+class User(db.Model, UserMixin):
     """ User of the Dating website."""
 
     __tablename__ = 'users'
 
-    user_id = db.Column(db.Integer, autoincrement=True,
-                                    primary_key=True)
+    user_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     fname = db.Column(db.String(100), nullable=False)
     lname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
@@ -17,9 +24,7 @@ class User(db.Model):
     zipcode = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(100), nullable=False)
     profile_picture = db.Column(db.String(250), nullable=True)
-
-    interest = db.relationship('Interest',
-                            backref=db.backref('User'))
+    interest = db.relationship('Interest',backref=db.backref('User'))
 
 
 class Interest(db.Model):
@@ -29,29 +34,15 @@ class Interest(db.Model):
 
     __tablename__ = 'interests'
 
-    interest_id = db.Column(db.Integer, autoincrement=True,
-                            primary_key=True)
+    interest_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    hobby_id = db.Column(db.Integer,
-                        db.ForeignKey('hobbies.hobby_id'), nullable=False)
-    religion_id = db.Column(db.Integer,
-                        db.ForeignKey('religions.religion_id'),
-                        nullable=False)
-    book_genre_id = db.Column(db.Integer,
-                            db.ForeignKey('book_genres.book_genre_id'),
-                            nullable=False)
-    movie_genre_id = db.Column(db.Integer,
-                                db.ForeignKey('movie_genres.movie_genre_id'),
-                                nullable=False)
-    music_genre_id = db.Column(db.Integer,
-                                db.ForeignKey('music_genres.music_genre_id'),
-                                nullable=False)
-    fav_cuisine_id = db.Column(db.Integer,
-                                db.ForeignKey('fav_cuisines.fav_cuisine_id'),
-                                nullable=False)
-    outdoor_id = db.Column(db.Integer,
-                        db.ForeignKey('outdoors.outdoor_id'),
-                        nullable=False)
+    hobby_id = db.Column(db.Integer,db.ForeignKey('hobbies.hobby_id'), nullable=False)
+    religion_id = db.Column(db.Integer, db.ForeignKey('religions.religion_id'),nullable=False)
+    book_genre_id = db.Column(db.Integer, db.ForeignKey('book_genres.book_genre_id'), nullable=False)
+    movie_genre_id = db.Column(db.Integer, db.ForeignKey('movie_genres.movie_genre_id'), nullable=False)
+    music_genre_id = db.Column(db.Integer, db.ForeignKey('music_genres.music_genre_id'), nullable=False)
+    fav_cuisine_id = db.Column(db.Integer, db.ForeignKey('fav_cuisines.fav_cuisine_id'), nullable=False)
+    outdoor_id = db.Column(db.Integer, db.ForeignKey('outdoors.outdoor_id'), nullable=False)
 
 class BookGenre(db.Model):
     """Holds the Book_genres and their corresponding ids"""
@@ -60,9 +51,7 @@ class BookGenre(db.Model):
 
     book_genre_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     book_genre_name = db.Column(db.String(40), nullable=False)
-
-    interest = db.relationship('Interest',
-                            backref=db.backref('book_genre'))
+    interest = db.relationship('Interest', backref=db.backref('book_genre'))
 
 
 class MovieGenre(db.Model):
@@ -70,12 +59,10 @@ class MovieGenre(db.Model):
 
     __tablename__ = 'movie_genres'
 
-    movie_genre_id= db.Column(db.Integer, autoincrement=True,
-                                            primary_key=True)
+    movie_genre_id= db.Column(db.Integer, autoincrement=True, primary_key=True)
     movie_genre_name = db.Column(db.String(40), nullable=False)
 
-    interest = db.relationship('Interest',
-                            backref=db.backref('movie_genre'))
+    interest = db.relationship('Interest', backref=db.backref('movie_genre'))
 
 
 class MusicGenre(db.Model):
@@ -85,9 +72,7 @@ class MusicGenre(db.Model):
 
     music_genre_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     music_genre_name = db.Column(db.String(40), nullable=False)
-
-    interest = db.relationship('Interest',
-                            backref=db.backref('music_genre'))
+    interest = db.relationship('Interest', backref=db.backref('music_genre'))
 
 
 class FavCuisine(db.Model):
@@ -97,9 +82,7 @@ class FavCuisine(db.Model):
 
     fav_cuisine_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     fav_cuisine_name= db.Column(db.String(40), nullable=False)
-
-    interest = db.relationship('Interest',
-                            backref=db.backref('fav_cuisine'))
+    interest = db.relationship('Interest',backref=db.backref('fav_cuisine'))
 
 
 class Hobby(db.Model):
@@ -109,9 +92,7 @@ class Hobby(db.Model):
 
     hobby_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     hobby_name= db.Column(db.String(40), nullable=False)
-
-    interest = db.relationship('Interest',
-                            backref=db.backref('hobby'))
+    interest = db.relationship('Interest', backref=db.backref('hobby'))
 
 class Religion(db.Model):
     """Holds the religious views and their corresponding ids"""
@@ -120,9 +101,7 @@ class Religion(db.Model):
 
     religion_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     religion_name = db.Column(db.String(40), nullable=False)
-
-    interest = db.relationship('Interest',
-                            backref=db.backref('religion'))
+    interest = db.relationship('Interest', backref=db.backref('religion'))
 
 
 class Outdoor(db.Model):
@@ -132,9 +111,7 @@ class Outdoor(db.Model):
 
     outdoor_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     outdoor_activity = db.Column(db.String(40), nullable=False)
-
-    interest = db.relationship('Interest',
-                            backref=db.backref('outdoor'))
+    interest = db.relationship('Interest', backref=db.backref('outdoor'))
 
 
 def example_data():

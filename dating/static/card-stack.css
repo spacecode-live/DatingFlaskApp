@@ -9,23 +9,7 @@ body {
     margin: 0 15px;
 }
 
-.background-0 { background: #C87D26; }
-.background-1 { background: #569D99; }
-.background-2 { background: #740039; }
-.background-3 { background: #839FC5; }
-.background-4 { background: #6A4F76; }
-.background-5 { background: #57636D; }
-.background-6 { background: #6D5242; }
-.background-7 { background: #4F5051; }
-
-.background-0,
-.background-1,
-.background-2,
-.background-3,
-.background-4,
-.background-5,
-.background-6,
-.background-7 {
+ {
   transition: all 400ms ease;
 }
 

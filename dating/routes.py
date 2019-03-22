@@ -1,12 +1,19 @@
+<<<<<<< HEAD
+import os
+=======
+>>>>>>> 19a43678fb50b47788319bd99772e72fd928341c
 from flask import render_template, url_for, flash, redirect, request
 from dating import app, db, bcrypt
 from dating.forms import RegistrationForm, LoginForm
 from dating.models import *
 from flask_login import login_user, current_user, logout_user, login_required
+<<<<<<< HEAD
+=======
 
+>>>>>>> 19a43678fb50b47788319bd99772e72fd928341c
 
 cards = [
-{ 'name': 'Daenerys Targaryen', 'age': '18'},
+{ 'name': 'Daenerys Targaryen', 'age': '18', 'interest': 'reading'},
 { 'name': 'Jon Snow', 'age': '22'},
 { 'name': 'Tyrion Lannister', 'age': '24'},
 { 'name': 'Missandei', 'age': '22'},
@@ -68,7 +75,11 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
+<<<<<<< HEAD
+    return redirect(url_for('login'))
+=======
     return redirect(url_for('home'))
+>>>>>>> 19a43678fb50b47788319bd99772e72fd928341c
 
 @app.route("/account")
 @login_required

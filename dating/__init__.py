@@ -14,8 +14,6 @@ bcrypt = Bcrypt(app)
 login = LoginManager(app)
 migrate = Migrate(app, db)
 login.login_view = 'login'
-login.login_message_category = 'info'
-
 
 from dating import routes, models
 

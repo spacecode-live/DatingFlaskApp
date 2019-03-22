@@ -5,9 +5,8 @@ from dating.forms import RegistrationForm, LoginForm
 from dating.models import *
 from flask_login import login_user, current_user, logout_user, login_required
 
-
 cards = [
-{ 'name': 'Daenerys Targaryen', 'age': '18'},
+{ 'name': 'Daenerys Targaryen', 'age': '18', 'interest': 'reading'},
 { 'name': 'Jon Snow', 'age': '22'},
 { 'name': 'Tyrion Lannister', 'age': '24'},
 { 'name': 'Missandei', 'age': '22'},

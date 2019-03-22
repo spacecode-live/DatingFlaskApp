@@ -1,3 +1,4 @@
+import os
 from flask import render_template, url_for, flash, redirect, request
 from dating import app, db, bcrypt
 from dating.forms import RegistrationForm, LoginForm
@@ -68,7 +69,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 @app.route("/account")
 @login_required

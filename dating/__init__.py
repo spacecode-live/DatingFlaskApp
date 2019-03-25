@@ -3,19 +3,19 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from dating.config import Config
+from dating.config import Config   #from config module, import config class
 
 app = Flask(__name__)
 
-app.config.from_object(Config)
+app.config.from_object(Config) #tells flask to use and apply the config file
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-migrate = Migrate(app, db)
 login = LoginManager(app)
+migrate = Migrate(app, db)
 login.login_view = 'login'
 
-from dating import routes , models
+from dating import routes, models
 
 def main():
     db.create_all()

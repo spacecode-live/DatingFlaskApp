@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def load_user(id):
     return User.query.get(int(id))
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin):  #This class defines several fields as class variables.
     """ User of the Dating website."""
 
     __tablename__ = 'users'
@@ -24,5 +24,9 @@ class User(db.Model, UserMixin):
     phone = db.Column(db.String(100), nullable=True)
     profile_picture = db.Column(db.String(250), default = 'default.jpg', nullable=True)
 
-    def _repr_(self):
+    def _repr_(self): #The __repr__ method tells Python how to print objects of this class
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+class Profile()(db.Model):
+    """ The profile page of a user """
+    __tablename__ = 'profiles'

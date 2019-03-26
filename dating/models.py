@@ -26,7 +26,3 @@ class User(db.Model, UserMixin):  #This class defines several fields as class va
 
     def _repr_(self): #The __repr__ method tells Python how to print objects of this class
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
-class Profile()(db.Model):
-    """ The profile page of a user """
-    __tablename__ = 'profiles'

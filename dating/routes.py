@@ -29,10 +29,12 @@ def index():
     return render_template('login.html', title='Login', form=form)
 
 @app.route("/home")
+@login_required
 def home():
     return render_template('home.html', cards=cards)
 
 @app.route("/about")
+@login_required
 def about():
     return render_template('about.html', title='About')
 
@@ -74,3 +76,8 @@ def logout():
 @login_required
 def account():
     return render_template('account.html', title='Account')
+
+@app.route("/profile")
+@login_required
+def profile():
+    return redirect(url_for('profile'))

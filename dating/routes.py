@@ -81,3 +81,8 @@ def profile():
 @login_required
 def account():
     return render_template('account.html', title='Account')
+
+@app.route("/profile")
+@login_required
+def profile():
+    return redirect(url_for('profile'))

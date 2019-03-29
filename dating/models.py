@@ -1,6 +1,8 @@
 from dating import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+#The purpose of this field is to hold a hash of the user password, which will be used to verify the password entered
+#by the user during the login process. werkzeug is a package that implements password hashing. 
 
 @login.user_loader
 def load_user(id):
@@ -13,14 +15,14 @@ class User(db.Model, UserMixin):  #This class defines several fields as class va
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    fname = db.Column(db.String(100), nullable=True)
-    lname = db.Column(db.String(100), nullable=True)
+    firstname = db.Column(db.String(100), nullable=True)
+    lastname = db.Column(db.String(100), nullable=True)
     email = db.Column(db.String(100), nullable=False, unique=True)
 
     username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
     date_of_birth = db.Column(db.String(100), nullable=True)
-    zipcode = db.Column(db.String(100), nullable=True)
+    city = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(100), nullable=True)
     profile_picture = db.Column(db.String(250), default = 'default.jpg', nullable=True)
 

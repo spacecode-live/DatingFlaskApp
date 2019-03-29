@@ -11,7 +11,7 @@ app.config.from_object(Config) #tells flask to use and apply the config file
 
 db = SQLAlchemy(app) #db object that represents the database.
 bcrypt = Bcrypt(app)
-login = LoginManager(app)
+login = LoginManager(app) #initializes the flask-login extension
 migrate = Migrate(app, db) #object that represents the migration engine.
 login.login_view = 'login'
 

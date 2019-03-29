@@ -45,7 +45,9 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password, firstname=form.firstname.data, lastname=form.lastname.data, date_of_birth=form.date_of_birth.data, city=form.city.data, phone=form.phone.data)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password,
+                firstname=form.firstname.data, lastname=form.lastname.data, date_of_birth=form.date_of_birth.data,
+                city=form.city.data, phone=form.phone.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -76,11 +78,6 @@ def logout():
 @login_required
 def account():
     return render_template('account.html', title='Account')
-
-@app.route("/profile")
-@login_required
-def profile():
-    return redirect(url_for('profile'))
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required

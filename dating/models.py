@@ -18,15 +18,14 @@ class User(db.Model, UserMixin):  #This class defines several fields as class va
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    firstname = db.Column(db.String(100), nullable=True)
-    lastname = db.Column(db.String(100), nullable=True)
+    firstname = db.Column(db.String(100), nullable=False)
+    lastname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
-
-    date_of_birth = db.Column(db.String(100), nullable=True)
-    city = db.Column(db.String(100), nullable=True)
-    phone = db.Column(db.String(100), nullable=True)
+    date_of_birth = db.Column(db.String(100), nullable=False)
+    city = db.Column(db.String(100), nullable=False)
+    phone = db.Column(db.String(100), nullable=False)
     #profile_picture = db.Column(db.String(250), default = 'default.jpg', nullable=True)
 
     def _repr_(self): #The __repr__ method tells Python how to print objects of this class

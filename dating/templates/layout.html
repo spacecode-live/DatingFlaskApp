@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
 
     {%if title %}
       <title>Find True Love - {{title}}</title>
@@ -42,6 +41,7 @@
               <div class="navbar-nav">
                 {% if current_user.is_authenticated %}
                   <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                  <!-- <a class="nav-item nav-link" href="{{ url_for('profile') }}">Profile</a> -->
                   <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
                 {% else %}
                   <a class="nav-item nav-link" href="/login">Login</a>

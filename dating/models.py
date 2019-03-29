@@ -7,6 +7,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+#Flask-Login knows nothing about databases, it needs the application's help in loading a user.
+#configure a user loader function that can be called to load a user given the ID.
+#The user loader is registered with Flask-Login with the @login.user_loader decorator.
 
 class User(db.Model, UserMixin):  #This class defines several fields as class variables.
     """ User of the Dating website."""
@@ -15,10 +18,9 @@ class User(db.Model, UserMixin):  #This class defines several fields as class va
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    firstname = db.Column(db.String(100), nullable=True)
-    lastname = db.Column(db.String(100), nullable=True)
+    firstname = db.Column(db.String(100), nullable=False)
+    lastname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
-
     username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
     date_of_birth = db.Column(db.String(100), nullable=False)

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from dating.models import User
 
@@ -10,6 +10,9 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators = [DataRequired(), EqualTo('password')])
+    date_of_birth = StringField('Date Of Birth (MM/DD/YYYY)', validators=[DataRequired(), Length(min = 2, max = 20)] )
+    city = StringField('City', validators=[DataRequired(), Length(min = 2, max = 300)] )
+    phone = StringField('Phone (XXX)-(XXX)-(XXXX)', validators=[DataRequired(), Length(min = 10, max = 10)] )
     submit = SubmitField('Sign up')
 
     def validate_username(self, username):
@@ -22,16 +25,15 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('That email is taken. Please choose a different one.')
 
-
 class LoginForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
     remember = BooleanField('RememberMe')
     submit = SubmitField('Login')
 
-class Profile(FlaskForm):
-    firstname = StringField('First name', validators = [DataRequired()])
-    lastname = StringField('Last name', validators = [DataRequired()])
-    age = IntegerField('Age', validators = [DataRequired()])
-    birth_day = StringField('Birth day', validators = [DataRequired()])
-    about_me = StringField('About me', Length(min = 100, max = 500))
+class EditProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min = 2, max = 20)])
+    email = StringField('Email', validators = [DataRequired(), Email()])
+    city = StringField('City', validators=[DataRequired(), Length(min = 2, max = 300)] )
+    phone = StringField('Phone (XXX)-(XXX)-(XXXX)', validators=[DataRequired(), Length(min = 10, max = 10)] )
+    submit = SubmitField('Submit')

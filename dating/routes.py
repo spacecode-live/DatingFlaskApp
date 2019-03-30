@@ -1,7 +1,7 @@
 import os
 from flask import render_template, url_for, flash, redirect, request
 from dating import app, db, bcrypt
-from dating.forms import RegistrationForm, LoginForm
+from dating.forms import RegistrationForm, LoginForm, EditProfileForm
 from dating.models import *
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -90,11 +90,10 @@ def edit_profile():
         current_user.phone = form.phone.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect('account.html')
+        return redirect(url_for('edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
         form.city.data = current_user.city
         form.phone.data = current_user.phone
-    return render_template('profileform.html', title='Edit Profile',
-                           form=form)
+    return render_template('profileform.html', title='Edit Profile', form=form)

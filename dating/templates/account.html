@@ -8,10 +8,10 @@
           <h2 class="account-heading">{{ current_user.firstname }} {{ current_user.lastname}}</h2>
 
           <ul>
-              <p><b>{{ current_user.username }}</b></p>
-              <p>Birth Day:{{ current_user.date_of_birth }}</p>
-              <p>Lives in: {{ current_user.city }}</p>
-              <p>Contact through:</p>
+              <p>{{ current_user.username }}</p>
+              <p><b>Birth Day:</b>{{ current_user.date_of_birth }}</p>
+              <p><b>Lives in:</b>{{ current_user.city }}</p>
+              <p><b>Contact through:</b></p>
               <p style="text-indent: 40px">Email: {{ current_user.email }}</p>
               <p style="text-indent: 40px">Phone: {{ current_user.phone }}</p>
           </ul>

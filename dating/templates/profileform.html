@@ -2,7 +2,9 @@
 
 {% block content %}
     <h1>Edit Profile</h1>
+    <div class="content-section">
     <form action="" method="post">
+      <div>
         {{ form.hidden_tag() }}
         <p>
             {{ form.username.label }}<br>
@@ -37,5 +39,7 @@
         </p>
 
         <p>{{ form.submit() }}</p>
+      <div>
     </form>
+    </div>
 {% endblock %}

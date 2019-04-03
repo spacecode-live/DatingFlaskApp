@@ -1,0 +1,20 @@
+1|Board/tabletop games
+2|Computer programming
+3|Gaming
+4|Fantasy sports
+5|Skateboarding
+6|Listening to music
+7|Playing musical instruments
+8|Dance
+9|Cooking
+10|Knitting
+11|sewing
+12|Design
+13|Photography
+14|Sketching
+15|Painting
+16|Scrapbooking
+17|Do it yourself
+18|Woodworking
+19|poetry
+20|Writing

@@ -1,0 +1,4 @@
+1|Vegan
+2|vegetarian
+3|Non-Vegetarian
+4|I will eat anything that moves

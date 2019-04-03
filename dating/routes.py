@@ -1,4 +1,6 @@
 import os
+import secrets
+from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from dating import app, db, bcrypt
 from dating.forms import RegistrationForm, LoginForm, EditProfileForm
@@ -31,12 +33,28 @@ def index():
 @app.route("/home")
 @login_required
 def home():
-    return render_template('home.html', cards=cards)
+    users_stack = User.query.all()
+    return render_template('home.html', cards = cards, users_stack = users_stack)
 
 @app.route("/about")
 @login_required
 def about():
     return render_template('about.html', title='About')
+
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/profilepics', picture_fn)
+
+    output_size = (568, 528)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -84,6 +102,9 @@ def account():
 def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
+        if form.profilepic.data:
+            picture_file = save_picture(form.profilepic.data)
+            current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
         current_user.city = form.city.data
@@ -96,4 +117,9 @@ def edit_profile():
         form.email.data = current_user.email
         form.city.data = current_user.city
         form.phone.data = current_user.phone
-    return render_template('profileform.html', title='Edit Profile', form=form)
+
+        next_page = request.args.get('next')
+        return redirect(next_page) if next_page else redirect(url_for('account'))
+        flash('Your photo has been uploaded! It is now your profile pic', 'success')
+    image_file = url_for('static', filename='profilepics/' + current_user.image_file)
+    return render_template('profileform.html', title='Edit Profile', form=form, image_file=image_file)

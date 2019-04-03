@@ -1,0 +1,14 @@
+1|I am pretty adventurous
+2|Mountaineering
+3|Rock climbing
+4|Hiking
+5|Camping
+6|Skiing
+7|Biking
+8|Swimming
+9|Running
+10|Tennis
+11|Cricket
+12|Walking
+13|Sun bathing
+14|I hate outdoors

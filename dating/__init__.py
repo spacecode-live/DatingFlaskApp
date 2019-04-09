@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from dating.config import Config   #from config module, import config class
+from config import Config   #from config module, import config class
 
 app = Flask(__name__)
 #The __name__ variable passed to the Flask class is a Python predefined variable,

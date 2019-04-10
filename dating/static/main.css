@@ -12,6 +12,35 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #5f788a;
 }
 
+.myButton {
+	-moz-box-shadow: 0px 4px 0px 0px #3dc21b;
+	-webkit-box-shadow: 0px 4px 0px 0px #3dc21b;
+	box-shadow: 0px 4px 0px 0px #3dc21b;
+	background-color:#44c767;
+	-moz-border-radius:14px;
+	-webkit-border-radius:14px;
+	border-radius:14px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:15px;
+	font-weight:bold;
+	padding:14px 16px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #bdd9b9;
+}
+
+.myButton:hover {
+	background-color:#5cbf2a;
+}
+
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
 }

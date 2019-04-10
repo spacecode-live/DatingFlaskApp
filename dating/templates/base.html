@@ -1,0 +1,52 @@
+<!doctype html>
+  <html>
+  <head>
+      <title>CoffeeBuddy</title>
+        <meta charset="utf-8">
+          <meta name="viewport" content="width=device=width, initial-scale=1">
+            <script src="https://code.jquery.com/jquery.js"></script>
+              <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+                  <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MyNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- this is a tag for putting a logo in the navbar -->
+          <a class="navbar-brand"><img src="../static/coffeebuddylogo.png"></a>
+        </div><<!-- end navbar header -->
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <button type="button" class="btn btn-default" id="home">
+              <li><a href="/">Home</a></li>
+            </button>
+            {% if session["user_id"] %}
+              <button type="button" class="btn btn-default" id="logout">
+                <li><a href="/logout">Log out</a></li>
+              </button>
+            {% else %}
+              <button type="button" class="btn btn-default" id="login">
+                <li><a href="/login">Log in</a></li>
+              </button>
+              <button type="button" class="btn btn-default" id="register">
+                <li><a href="/register">Sign up</a></li>
+              </button>
+            {% endif %}
+          </ul>
+      </div>
+    </nav> <!-- end nav -->
+        {% for flash in get_flashed_messages() %}
+          {{ flash }}
+        {% endfor %}
+        {% block content %}
+          put your content here
+        {% endblock %}
+  </body>
+</html>

@@ -24,8 +24,8 @@ def get_user_name(input_id):
         Returns the fname and lname of the user.
     """
 
-    user = User.query.filter(User.user_id == '{}'.format(input_id)).first()
-    return ('{}'.format(user.fname), '{}'.format(user.lname))
+    user = User.query.filter(User.id == '{}'.format(input_id)).first()
+    return ('{}'.format(user.firstname), '{}'.format(user.lastname))
 
 def get_user_info(input_id):
     """ Queries the users table and accepts a userid as input.
@@ -33,17 +33,17 @@ def get_user_info(input_id):
         OUTPUT FORMAT = string.
     """
 
-    user = User.query.filter(User.user_id == input_id).all()
+    user = User.query.filter(User.id == input_id).all()
 
-    user_id = user[0].user_id
+    user_id = user[0].id
     email = user[0].email
-    user_name = user[0].user_name
+    user_name = user[0].username
     date_of_birth = user[0].date_of_birth
-    zipcode = user[0].zipcode
+    zipcode = user[0].city
     phone = user[0].phone
-    fname = user[0].fname
-    lname = user[0].lname
-    profile_picture = user[0].profile_picture
+    fname = user[0].firstname
+    lname = user[0].lastname
+    profile_picture = user[0].image_file
 
 
     return [user_id, email, user_name,

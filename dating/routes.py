@@ -3,17 +3,13 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from dating import app, db, bcrypt
-from dating.forms import RegistrationForm, LoginForm, EditProfileForm
+from dating.forms import RegistrationForm, LoginForm, EditProfileForm, InterestForm
 from dating.models import *
 from flask_login import login_user, current_user, logout_user, login_required
+from dating.queries import *
+from dating.matcher import *
+import datetime
 
-cards = [
-{ 'name': 'Daenerys Targaryen', 'age': '18', 'interest': 'reading'},
-{ 'name': 'Jon Snow', 'age': '22'},
-{ 'name': 'Tyrion Lannister', 'age': '24'},
-{ 'name': 'Missandei', 'age': '22'},
-{ 'name': 'Podrick Payne', 'age' : '18'}
-]
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -34,7 +30,7 @@ def index():
 @login_required
 def home():
     users_stack = User.query.all()
-    return render_template('home.html', cards = cards, users_stack = users_stack)
+    return render_template('home.html', users_stack=users_stack)
 
 @app.route("/about")
 @login_required
@@ -55,6 +51,13 @@ def save_picture(form_picture):
 
     return picture_fn
 
+def clean_time(str_tme):
+    """ Helper function to clean a string that comes from the html date input """
+
+    chars = str_tme.split('T')
+    tm = (" ").join(chars)
+    return tm + ":00"
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -68,6 +71,7 @@ def register():
                 city=form.city.data, phone=form.phone.data)
         db.session.add(user)
         db.session.commit()
+
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
@@ -94,8 +98,17 @@ def logout():
 
 @app.route("/account")
 @login_required
+#Allows a user to view their account profile only if they are logged in
 def account():
     return render_template('account.html', title='Account')
+
+@app.route("/profile/<user>", methods=['GET', 'POST'])
+@login_required
+#Allows a user to view other user's profile page
+def profile(user):
+    selected_user=User.query.filter_by(username=user).first()
+    user = selected_user.username
+    return render_template('profile.html', selected_user=selected_user, user=user)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -117,9 +130,163 @@ def edit_profile():
         form.email.data = current_user.email
         form.city.data = current_user.city
         form.phone.data = current_user.phone
-
-        next_page = request.args.get('next')
-        return redirect(next_page) if next_page else redirect(url_for('account'))
         flash('Your photo has been uploaded! It is now your profile pic', 'success')
     image_file = url_for('static', filename='profilepics/' + current_user.image_file)
     return render_template('profileform.html', title='Edit Profile', form=form, image_file=image_file)
+
+@app.route('/add_interests', methods=['GET', 'POST'])
+@login_required
+def add_interests():
+    #form = InterestForm()
+    all_interests = [all_book_genres(), all_movie_genres(),all_music_genres(),all_fav_cuisines(),all_hobbies(),
+    all_religions(),all_outdoors()]
+
+    user_id = current_user.id
+    book_genre_id = request.form.get("Preferred book genre")
+    movie_genre_id = request.form.get("Preferred movie genre")
+    music_genre_id = request.form.get("Preferred music genre")
+    fav_cuisine_id = request.form.get('Preferred cuisine type')
+    hobby_id = request.form.get('Favorite hobby')
+    outdoor_id = request.form.get('Favorite Outdoor activity')
+    religion_id = request.form.get('Religious ideology')
+
+    if request.method == 'POST':
+          #add user interests for the specific user
+        interest = Interest(
+            user_id=user_id,
+            book_genre_id=book_genre_id,
+            movie_genre_id=movie_genre_id,
+            music_genre_id=music_genre_id,
+            fav_cuisine_id=fav_cuisine_id,
+            hobby_id=hobby_id,
+            outdoor_id=outdoor_id,
+            religion_id=religion_id
+        )
+
+        db.session.add(interest)
+        db.session.commit()
+        return redirect(url_for('account'))
+
+
+    return render_template('interestform.html', title='Add Interests', all_interests=all_interests)
+
+@app.route('/generate_matches', methods=["GET"])
+@login_required
+def show_generate_matches_form():
+    """Route for users to enter their zipcode and a time for meeting up!!.
+    """
+
+    return render_template("generate_matches.html")
+
+@app.route('/generate_matches', methods=["POST"])
+@login_required
+def generate_matches():
+    """This route
+    - gets the time from the user who is logged in
+    - gets the zipcode from the user
+    """
+
+    query_time = request.form.get('triptime')
+    query_pin_code = request.form.get('pincode')
+    user_id = session['user_id']
+    session['query_pincode'] = query_pin_code
+    session_time = clean_time(query_time)
+    session['query_time'] = session_time
+
+    date_in = query_time
+    date_out = datetime.datetime(*[int(v) for v in date_in.replace('T', '-').replace(':', '-').split('-')])
+    trip =  PendingMatch(user_id=user_id,
+                        query_pin_code=query_pin_code,
+                        query_time=date_out,
+                        pending=True)
+
+    db.session.add(trip)
+    db.session.commit()
+
+    #at this point we will pass the information the yelper
+    #yelper will end information to google and google will render
+    # a map with relevant information
+
+    return redirect("show_matches")
+
+@app.route('/show_matches',methods=['GET', 'POST'])
+@login_required
+def show_potential_matches():
+    """ This route
+        - accesses the session for a user_id and query_pin_code
+        - accesses the matchmaker module for making matches
+        -
+    """
+
+    # gets the user_id from the session
+    userid = current_user.id
+    # gets the pincode from the session
+    pin = session.get('query_pincode')
+    # gets the query_time from the session
+    query_time = session.get('query_time')
+    # gets a list of pending matches using the potential_matches from
+    # the matchmaker module
+    # potential_matches is  a list of user_ids
+    # => [189, 181, 345, 282, 353, 271, 9, 9, 501, 9]
+    potential_matches = find_valid_matches(userid, pin, query_time)
+    # gets a list of tuples of match percents for the userid
+    # uses the create_matches from the matchmaker
+    # create_matches takes a list of user_ids as the first param
+    # create_matches take the userid as the second param
+    # create_matches([30,40,50],60)
+    # => [(60, 30, 57.90407177363699), (60, 40, 54.887163561076605)]
+    match_percents = create_matches(potential_matches, userid)
+
+    user_info = get_user_info(userid)
+    # this is the logged in user's info
+    user_name = get_user_name(userid)
+    # this is the logged in user's username
+
+    match_info = []
+
+    for user in match_percents:
+        username = get_user_name(user[1])
+        user_info = get_user_info(user[1])
+        matched_user_id = user[1]
+        matched_username = username[0] + " " + username[1]
+        match_percent = round(user[2])
+        match_details = get_commons(user[1], userid)
+
+        match_info.append((matched_username, match_percent,
+                        matched_user_id, user_info, match_details))
+
+    # match info is a list of tuples [(username,
+    #                               match_percent,
+    #                               matched_user_id,
+    #                                user_info, match_details)]
+
+
+    return render_template('show_matches.html',
+                                user_name=user_name,
+                                user_info=user_info,
+                                match_info=match_info)
+
+@app.route('/show_matches',methods=["POST"])
+@login_required
+def update_potential_matches():
+    """ - Gets the user input for a confirm match
+        - Updates the user input for a match to the db
+    """
+
+
+
+    matched = request.form.get("user_match")
+    user_id_1 = session['user_id']
+    match_date = datetime.datetime.now()
+    query_pincode = session['query_pincode']
+    session['matched_user'] = matched
+
+    match = UserMatch(user_id_1=user_id_1,
+                    user_id_2=matched,
+                    match_date=match_date,
+                    user_2_status=False,
+                    query_pincode=query_pincode)
+
+    db.session.add(match)
+    db.session.commit()
+    return redirect('/show_map')

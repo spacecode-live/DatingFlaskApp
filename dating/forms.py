@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from dating.models import User 
+from dating.models import *
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min = 2, max = 20)])
@@ -38,4 +38,14 @@ class EditProfileForm(FlaskForm):
     city = StringField('City', validators=[DataRequired(), Length(min = 2, max = 300)] )
     phone = StringField('Phone (XXX)-(XXX)-(XXXX)', validators=[DataRequired(), Length(min = 10, max = 12)] )
     profilepic = FileField('Add Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Submit')
+
+class InterestForm(FlaskForm):
+    book_genres = StringField('Book Genre', validators=[DataRequired(), Length(min = 2, max = 200)] )
+    movie_genres = StringField('Movie Genre', validators=[DataRequired(), Length(min = 2, max = 200)])
+    music_genre = StringField('Music Genre', validators=[DataRequired(), Length(min = 2, max = 200)])
+    fav_cuisine = StringField('Favorite Cuisine', validators=[DataRequired(), Length(min = 2, max = 200)])
+    hobby = StringField('Hobby', validators=[DataRequired(), Length(min = 2, max = 200)])
+    outdoors = StringField('Outdoors', validators=[DataRequired(), Length(min = 2, max = 200)])
+    religion = StringField('Religion', validators=[DataRequired(), Length(min = 2, max = 200)])
     submit = SubmitField('Submit')

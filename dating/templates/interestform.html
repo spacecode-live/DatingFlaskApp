@@ -1,78 +1,41 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
+{% extends 'base.html' %}
+    {% block content %}
+    <style>
+    .btn-reg {
+      font-size: 12px;
+      color: #FFF;
+      padding: 12px 18px;
+      background: #f4b4c0;
+    }
+    </style>
+    <div class="container">
+        <form action="add_interests" method="POST" enctype="multipart/form-data">
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-
-    <script src="http://localhost:8080/bundle.js"></script>
-    <script src="./card-stack.js"></script>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css')}}">
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-  </head>
-
-  <header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-      <div class="container">
-        <a class="navbar-brand mr-4" href="/">Find True Love</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarToggle">
-          <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="/">Home</a>
-            <a class="nav-item nav-link" href="/about">About</a>
-          </div>
-          <!-- Navbar Right Side -->
-          <div class="navbar-nav">
-            {% if current_user.is_authenticated %}
-              <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-              <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-              <a class="nav-item nav-link" href="/login">Login</a>
-              <a class="nav-item nav-link" href="/register">Register</a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-
-
-
-
-    <h1>Add Interests</h1>
-
-    <div class="row">
-      <form action="register" method="POST">
-          <div class="col-xs-10 col-xs-offset-1">
-            <div class="panel panel-default" style="padding:20px">
-              <div>
-                <h2>New User interest Registeration</h2>
-              </div>
-                {% for sub_interest in all_interests %}
-                  <h4>{{sub_interest[0]}}</h4>
-                  <div class="btn-group"  data-toggle="buttons">
-                    {% for interest in sub_interest[1] %}
-                      <label class="btn btn-reg btn-sm">
-                        <input type="radio" name="{{sub_interest[0]}}" id="{{interest[0]}}" value="{{interest[1]}}" required>
-                          <label for="{{interest[1]}}">{{ interest[1] }}</label>
-                      </label>
-                    {% endfor %}
-                  </div><!-- end button-grp -->
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+          <div class="panel panel-default" style="padding:20px">
+            <div>
+              <h2>New User interest Registeration<h2>
+            </div>
+              {% for sub_interest in all_interests %}
+                <h4>{{sub_interest[0]}}</h4>
+                <div class="btn-group"  data-toggle="buttons">
+                  {% for interest in sub_interest[1] %}
+                    <label class="btn btn-reg btn-sm">
+                      <input type="radio" name="{{sub_interest[0]}}" id="{{interest[1]}}" value="{{interest[0]}}" required>
+                      <lable for="{{interest[1]}}">{{ interest[1] }}</label>
+                    </label>
                   {% endfor %}
-                  <input type = "submit" value="submit" class="btn btn-success btn-lg btn-block">
-        </form>
-      </div> <!-- end panel -->
+                </div><!-- end button-grp -->
+              {% endfor %}
+              <input type = "submit" value="submit" class="btn btn-success btn-lg btn-block">
+            </form>
+          </div> <!-- end panel -->
+        </div> <!-- end col -->
+      </div> <!-- end row -->
+    </div> <!-- end container -->
+    <script>
+      // $("#logout").hide();
+      // $("#register").hide();
+    </script>
+  {% endblock %}

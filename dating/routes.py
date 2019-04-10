@@ -142,13 +142,13 @@ def add_interests():
     all_religions(),all_outdoors()]
 
     user_id = current_user.id
-    book_genre_id = request.form.get("Preferred book genre")
-    movie_genre_id = request.form.get("Preferred movie genre")
-    music_genre_id = request.form.get("Preferred music genre")
+    book_genre_id = request.form.get("Favourite book genre")
+    movie_genre_id = request.form.get("Favourite movie genre")
+    music_genre_id = request.form.get("Favourite music genre")
     fav_cuisine_id = request.form.get('Preferred cuisine type')
     hobby_id = request.form.get('Favorite hobby')
     outdoor_id = request.form.get('Favorite Outdoor activity')
-    religion_id = request.form.get('Religious ideology')
+    religion_id = request.form.get('Religion')
 
     if request.method == 'POST':
           #add user interests for the specific user
@@ -193,8 +193,7 @@ def generate_matches():
     session_time = clean_time(query_time)
     session['query_time'] = session_time
 
-    date_in = query_time
-    date_out = datetime.datetime(*[int(v) for v in date_in.replace('T', '-').replace(':', '-').split('-')])
+
     trip =  PendingMatch(user_id=user_id,
                         query_pin_code=query_pin_code,
                         query_time=date_out,
@@ -209,7 +208,7 @@ def generate_matches():
 
     return redirect("show_matches")
 
-@app.route('/show_matches',methods=['GET', 'POST'])
+@app.route('/show_matches',methods=['GET'])
 @login_required
 def show_potential_matches():
     """ This route
@@ -229,6 +228,7 @@ def show_potential_matches():
     # potential_matches is  a list of user_ids
     # => [189, 181, 345, 282, 353, 271, 9, 9, 501, 9]
     potential_matches = find_valid_matches(userid, pin, query_time)
+
     # gets a list of tuples of match percents for the userid
     # uses the create_matches from the matchmaker
     # create_matches takes a list of user_ids as the first param

@@ -47,7 +47,7 @@ from dating.queries import get_max_id, get_interest_info
 #######################################################################################################
 
 def extract_vals(user):
-    """ Accepts a user object
+    """ Accepts an interest object
         Returns a list of values for each user's interest_id"""
 
     required_values = []

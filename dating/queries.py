@@ -24,8 +24,9 @@ def get_user_name(input_id):
         Returns the fname and lname of the user.
     """
 
-    user = User.query.filter(User.id == '{}'.format(input_id)).first()
-    return ('{}'.format(user.firstname), '{}'.format(user.lastname))
+    user = User.query.filter(User.id == input_id).first()
+    username = user.username;
+    return username
 
 def get_user_info(input_id):
     """ Queries the users table and accepts a userid as input.
@@ -100,7 +101,7 @@ def all_book_genres():
     for book in book_genres:
         books.append((book.book_genre_id, book.book_genre_name))
 
-    return ["Favourite book genre", books]
+    return ["Favorite book genre", books]
 
 
 def all_movie_genres():
@@ -114,7 +115,7 @@ def all_movie_genres():
     for movie in movie_genres:
         movies.append((movie.movie_genre_id, movie.movie_genre_name))
 
-    return ["Favourite movie genre", movies]
+    return ["Favorite movie genre", movies]
 
 
 def all_music_genres():
@@ -129,7 +130,7 @@ def all_music_genres():
         music.append((music_genre.music_genre_id,
                          music_genre.music_genre_name))
 
-    return ["Favourite music genre", music]
+    return ["Favorite music genre", music]
 
 def all_fav_cuisines():
     """ Queries the fav_cuisines table. Returns a list of tuples, first element is the cuisine id and second
@@ -242,37 +243,7 @@ def get_user_match(user_id):
     q1 = UserMatch.query
     fil = q1.filter(UserMatch.user_id_2 == 339, UserMatch.user_2_status == False).all()
 
-def find_trip_count(user_id):
-    """
-        Queries the UserMatch table for a user's matches
-    """
 
-    all_matches = UserMatch.query.filter(UserMatch.user_id_1 == user_id).all()
-
-    return [len(all_matches)]
-
-def update_matched(user_id1, user_id2, query_time):
-    """ Accepts 2 user ids as an input. user_id1 is the logged in user.
-        Checks UserMatch table for a pending match.
-        Returns True if a match is made.
-    """
-
-    time = datetime.datetime.now()
-    match = UserMatch.query.filter(UserMatch.user_id_2 == user_id1,
-                                    UserMatch.user_id_1 == user_id2,
-                                    UserMatch.user_2_status == False)
-
-    # check pending_matches table for both users user_ids
-    # if both have clicked on each other update the db to change
-    # the user status to false
-    pending_match = match.first()
-
-    if pending_match:
-        pending_match.user_2_status = True
-        db.session.commit()
-        return True
-
-    return False
 
 def find_valid_matches(user_id_1, pincode, query_time):
     """ Queries the pending_match for pending matches.
@@ -296,17 +267,3 @@ def find_valid_matches(user_id_1, pincode, query_time):
         potential_matches.append(user_id)
 
     return potential_matches
-
-#######################################################
-
-if __name__ == "__main__":
-    from server import app
-    connect_to_db(app)
-    db.create_all()
-    import doctest
-
-    result = doctest.testmod()
-    if not result.failed:
-        print("All tests passed!")
-
-    print ("Connected to DB.")

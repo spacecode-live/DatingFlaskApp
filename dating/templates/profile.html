@@ -2,12 +2,33 @@
 {% block content %}
 <div class="content-section">
   <div class="media">
-    <div>
-      <h2 class="account-heading">{{ selected_user.username }}</h2>
+    <div class="row">
+      <div>
+        <p style="text-align:center;"><img src='/static/profilepics/{{selected_user.image_file}}'align="middle"></p>
+          <h2 class="account-heading">{{ selected_user.firstname }} {{ selected_user.lastname}}</h2>
+          <div class="column">
+            <ul>
+              <p style="font-size: 20px"><b>User Information</b></p>
+              <p><b>Username: </b>{{ selected_user.username }}</p>
+              <p><b>Birthday: </b>{{ selected_user.date_of_birth }} </p>
+              <p><b>Lives in: </b>{{ selected_user.city }} </p>
+              <p><b>Contact through: </b></p>
+              <p style="text-indent: 20px">Email: {{ selected_user.email }}</p>
+              <p style="text-indent: 20px">Phone: {{ selected_user.phone }}</p>
+            </ul>
+          </div>
 
-    </div>
+      <div class="column">
+        <p style="font-size: 20px"><b>Interest</b></p>
+        <p><b>book: </b>Romantic Comedy</p>
+        <p><b>music: </b>pop </p>
+        <p><b>hobby: </b>Swimming, Reading, Chilling</p>
+      </div>
+
+        </div>
     </div>
   </div>
+</div>
 
 
 {% endblock content %}

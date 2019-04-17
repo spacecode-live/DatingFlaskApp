@@ -172,55 +172,7 @@ def load_outdoor_activities():
     db.session.commit()
 
 
-def seed_interests():
-    """ add data for each user in the interest table"""
 
-    books = BookGenre.query.all()
-    movies = MovieGenre.query.all()
-    music = MusicGenre.query.all()
-    cuisines = FavCuisine.query.all()
-    hobbies = Hobby.query.all()
-    religions = Religion.query.all()
-    outdoors = Outdoor.query.all()
-    users = User.query.all()
-
-    for user in users:
-        new_interest_row = Interest(user_id=user.id,
-                                    book_genre_id=choice(books).book_genre_id,
-                                    movie_genre_id=choice(movies).movie_genre_id,
-                                    music_genre_id=choice(music).music_genre_id,
-                                    fav_cuisine_id=choice(cuisines).fav_cuisine_id,
-                                    hobby_id=choice(hobbies).hobby_id,
-                                    religion_id=choice(religions).religion_id,
-                                    outdoor_id=choice(outdoors).outdoor_id)
-
-        db.session.add(new_interest_row)
-
-    db.session.commit()
-
-
-def load_user_queries():
-    """ Load all the queries from pending_match_data.txt to the PendingMatch table"""
-
-    print ("User Queries")
-
-    for row in open("seed_data/pending_match_data.txt"):
-        row = row.rstrip()
-        row = row.split("|")
-        user_id = row[0]
-        query_pin_code = row[1]
-        query_time = datetime.datetime.now()
-        pending = bool(row[2])
-
-        #insert pending matches
-        pending_match = PendingMatch(user_id=user_id,
-                                    query_pin_code=query_pin_code,
-                                    query_time=query_time,
-                                    pending=pending)
-
-        db.session.add(pending_match)
-
-    db.session.commit()
 
 if __name__ == "__main__":
     from flask import Flask
@@ -228,7 +180,6 @@ if __name__ == "__main__":
     SQLAlchemy(app)
 
     # Import different types of data
-    load_users()
     load_books()
     load_movies()
     load_music()
@@ -236,5 +187,3 @@ if __name__ == "__main__":
     load_hobbies()
     load_religions()
     load_outdoor_activities()
-    load_user_queries()
-    seed_interests()

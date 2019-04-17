@@ -39,13 +39,3 @@ class EditProfileForm(FlaskForm):
     phone = StringField('Phone (XXX)-(XXX)-(XXXX)', validators=[DataRequired(), Length(min = 10, max = 12)] )
     profilepic = FileField('Add Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Submit')
-
-class InterestForm(FlaskForm):
-    book_genres = StringField('Book Genre', validators=[DataRequired(), Length(min = 2, max = 200)] )
-    movie_genres = StringField('Movie Genre', validators=[DataRequired(), Length(min = 2, max = 200)])
-    music_genre = StringField('Music Genre', validators=[DataRequired(), Length(min = 2, max = 200)])
-    fav_cuisine = StringField('Favorite Cuisine', validators=[DataRequired(), Length(min = 2, max = 200)])
-    hobby = StringField('Hobby', validators=[DataRequired(), Length(min = 2, max = 200)])
-    outdoors = StringField('Outdoors', validators=[DataRequired(), Length(min = 2, max = 200)])
-    religion = StringField('Religion', validators=[DataRequired(), Length(min = 2, max = 200)])
-    submit = SubmitField('Submit')

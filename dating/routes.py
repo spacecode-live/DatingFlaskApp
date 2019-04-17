@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from dating import app, db, bcrypt
-from dating.forms import RegistrationForm, LoginForm, EditProfileForm, InterestForm
+from dating.forms import RegistrationForm, LoginForm, EditProfileForm
 from dating.models import *
 from flask_login import login_user, current_user, logout_user, login_required
 from dating.queries import *
@@ -142,9 +142,9 @@ def add_interests():
     all_religions(),all_outdoors()]
 
     user_id = current_user.id
-    book_genre_id = request.form.get("Favourite book genre")
-    movie_genre_id = request.form.get("Favourite movie genre")
-    music_genre_id = request.form.get("Favourite music genre")
+    book_genre_id = request.form.get("Favorite book genre")
+    movie_genre_id = request.form.get("Favorite movie genre")
+    music_genre_id = request.form.get("Favorite music genre")
     fav_cuisine_id = request.form.get('Preferred cuisine type')
     hobby_id = request.form.get('Favorite hobby')
     outdoor_id = request.form.get('Favorite Outdoor activity')
@@ -193,6 +193,7 @@ def generate_matches():
     session_time = clean_time(query_time)
     session['query_time'] = session_time
 
+    date_out = datetime.datetime(*[int(v) for v in query_time.replace('T', '-').replace(':', '-').split('-')])
 
     trip =  PendingMatch(user_id=user_id,
                         query_pin_code=query_pin_code,
@@ -245,15 +246,14 @@ def show_potential_matches():
     match_info = []
 
     for user in match_percents:
-        username = get_user_name(user[1])
+        matched_username = get_user_name(user[1])
         user_info = get_user_info(user[1])
         matched_user_id = user[1]
-        matched_username = username[0] + " " + username[1]
         match_percent = round(user[2])
-        match_details = get_commons(user[1], userid)
+        #match_details = get_commons(user[1], userid)
 
         match_info.append((matched_username, match_percent,
-                        matched_user_id, user_info, match_details))
+                        matched_user_id, user_info))
 
     # match info is a list of tuples [(username,
     #                               match_percent,
@@ -266,7 +266,7 @@ def show_potential_matches():
                                 user_info=user_info,
                                 match_info=match_info)
 
-@app.route('/show_matches',methods=["POST"])
+@app.route('/show_matches', methods=["POST"])
 @login_required
 def update_potential_matches():
     """ - Gets the user input for a confirm match
@@ -276,10 +276,11 @@ def update_potential_matches():
 
 
     matched = request.form.get("user_match")
-    user_id_1 = session['user_id']
+    user_id_1 = current_user.id
     match_date = datetime.datetime.now()
     query_pincode = session['query_pincode']
     session['matched_user'] = matched
+
 
     match = UserMatch(user_id_1=user_id_1,
                     user_id_2=matched,
@@ -289,4 +290,35 @@ def update_potential_matches():
 
     db.session.add(match)
     db.session.commit()
-    return redirect('/show_map')
+    return redirect('/confirmed')
+
+@app.route('/match_console', methods=["POST"])
+@login_required
+def show_match_details():
+    """ This route
+        - displays the final match of user's choice
+        - shows all the common interests to the user
+        - gives the user a chance to message the match
+        - gives the user a chance to choose a coffee shop
+    """
+
+    userid1 = current_user.id
+    userid2 = request.form.get("match_details")
+    user_info1 = get_user_info(userid1)
+    username1 = get_user_name(userid1)
+    user_info2 = get_user_info(userid2)
+    username2 = get_user_name(userid2)
+    match_info = get_commons(userid1, userid2)
+    match_percent = round(make_match(userid1, userid2))
+
+    return render_template("match_console.html", user_info1=user_info1,
+                                                    username1=username1,
+                                                    username2=username2,
+                                                    user_info2=user_info2,
+                                                    match_info=match_info,
+                                                    match_percent=match_percent)
+
+@app.route("/confirmed", methods=['GET'])
+@login_required
+def confirmed():
+    return render_template('confirmed.html')

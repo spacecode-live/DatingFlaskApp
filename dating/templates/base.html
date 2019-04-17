@@ -1,7 +1,7 @@
 <!doctype html>
   <html>
   <head>
-      <title>CoffeeBuddy</title>
+      <title>Find True Loves</title>
         <meta charset="utf-8">
           <meta name="viewport" content="width=device=width, initial-scale=1">
             <script src="https://code.jquery.com/jquery.js"></script>
@@ -20,7 +20,7 @@
             <span class="icon-bar"></span>
           </button>
           <!-- this is a tag for putting a logo in the navbar -->
-          <a class="navbar-brand"><img src="../static/coffeebuddylogo.png"></a>
+
         </div><<!-- end navbar header -->
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
@@ -42,9 +42,6 @@
           </ul>
       </div>
     </nav> <!-- end nav -->
-        {% for flash in get_flashed_messages() %}
-          {{ flash }}
-        {% endfor %}
         {% block content %}
           put your content here
         {% endblock %}

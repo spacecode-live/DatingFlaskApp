@@ -189,6 +189,7 @@ def generate_matches():
     query_time = request.form.get('triptime')
     query_pin_code = request.form.get('pincode')
     user_id = session['user_id']
+    #if this user is in the database for the same exact date, then go to show_matches
     session['query_pincode'] = query_pin_code
     session_time = clean_time(query_time)
     session['query_time'] = session_time
@@ -272,7 +273,6 @@ def update_potential_matches():
     """ - Gets the user input for a confirm match
         - Updates the user input for a match to the db
     """
-
 
 
     matched = request.form.get("user_match")
